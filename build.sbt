@@ -1,5 +1,5 @@
 name := """platzi-video"""
-organization := "com.example"
+organization := "com.platzi"
 
 version := "1.0-SNAPSHOT"
 
