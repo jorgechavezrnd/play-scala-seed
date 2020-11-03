@@ -13,3 +13,18 @@ https://developer.lightbend.com/start/?group=play&project=play-scala-seed
 ```
 sbt update
 ```
+
+### Command to compile and be sure that everything compiles correctly
+```
+sbt compile
+```
+
+### Command for start server in development mode
+```
+sbt run
+```
+### URL for initialize database
+```
+Method: GET
+URL: http://localhost:9000/dbInit
+```
