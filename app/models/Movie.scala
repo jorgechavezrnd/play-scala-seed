@@ -36,3 +36,21 @@ class MovieTable(tag: Tag) extends Table[Movie](tag, "movie") {
   def * =
     (id.?, title, year, cover, description, duration, contentRating, source, tags) <> (Movie.tupled, Movie.unapply)
 }
+
+import javax.inject.Inject
+import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.mvc.{AbstractController, ControllerComponents}
+import scala.concurrent.{ExecutionContext, Future}
+import slick.jdbc.JdbcProfile
+/*
+  Clase repository, donde irán las consultas.
+ */
+class MovieRepository @Inject()(
+  protected val dbConfigProvider: DatabaseConfigProvider,
+  cc: ControllerComponents
+)(implicit ec: ExecutionContext)
+  extends AbstractController(cc)
+  with HasDatabaseConfigProvider[JdbcProfile] {
+
+  private lazy val movieQuery = TableQuery[MovieTable]
+}
