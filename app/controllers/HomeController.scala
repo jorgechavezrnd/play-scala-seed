@@ -3,13 +3,18 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
+// Importar el repository y el contexto de ejecución global
+import models.MovieRepository
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
+// Hay que agregar el repository para que sea inyectado
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject()(val controllerComponents: ControllerComponents,
+                               val movieRepository: MovieRepository) extends BaseController {
 
   /**
    * Create an Action to render an HTML page.
@@ -20,5 +25,17 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    */
   def index() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
+  }
+
+  /*
+    Función de ayuda para crear la tabla si esta aún no existe.
+   */
+  def dbInit() = Action.async { request =>
+    movieRepository.dbInit
+      .map(_ => Created("Tabla creada"))
+      .recover{ex =>
+        play.Logger.of("dbInit").debug("Error en dbInit", ex)
+        InternalServerError(s"Hubo un error")
+      }
   }
 }
