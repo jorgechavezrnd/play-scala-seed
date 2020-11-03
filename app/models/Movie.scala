@@ -53,4 +53,22 @@ class MovieRepository @Inject()(
   with HasDatabaseConfigProvider[JdbcProfile] {
 
   private lazy val movieQuery = TableQuery[MovieTable]
+
+  /**
+   * Función de ayuda para crear la tabla si ésta
+   * aun no existe en la base de datos
+   * @return
+   */
+  def dbInit: Future[Unit] = {
+    // Definición de la sentencia SQL de creación del schema
+    val createSchema = movieQuery.schema.createIfNotExists
+    // db.run Ejecuta una sentencia SQL, devolviendo un Future
+    db.run(createSchema)
+  }
+
+  def getAll = ???
+  def getOne = ???
+  def create = ???
+  def update = ???
+  def delete = ???
 }
