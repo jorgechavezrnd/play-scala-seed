@@ -28,3 +28,14 @@ sbt run
 Method: GET
 URL: http://localhost:9000/dbInit
 ```
+
+### Commands for export project to Docker
+
+- `sbt` Start sbt console
+- `playUpdateSecret` Generate secret key in application.conf (This should be executed in sbt console)
+- `start` Start server in production mode (This should be executed in sbt console)
+- `sbt dist` Generate .zip file for distribution
+- `sbt stage` For put .zip file content into "stage" folder
+
+- `sbt`
+- `docker:publishLocal` Export aplication to a new docker image'
